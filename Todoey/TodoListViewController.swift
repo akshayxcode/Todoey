@@ -10,10 +10,12 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    var listArray = ["" ]
+    var listArray = ["Akshay","Rucksomeberg","California"]
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        listArray = defaults.array(forKey: "TodoListArray") as! [String]
     }
     
     //MARK - tableview Datasource Method
@@ -44,7 +46,10 @@ class TodoListViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add New Item", style: .default) { (action) in
          self.listArray.append(textField.text!)
-        self.tableView.reloadData()
+            
+         self.defaults.setValue(self.listArray, forKey: "TodoListArray")
+            
+         self.tableView.reloadData()
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item"
